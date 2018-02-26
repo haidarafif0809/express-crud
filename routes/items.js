@@ -11,7 +11,9 @@ router.get('/', (req, res) => {
     limit : 10,
     offset: offset,
     order : [['id','DESC']],
+    include: [{ model: models.Supplier}]
   }).then((items) => {
+    // res.send(items);
     const alertMessage = req.flash('alertMessage');
     const alertStatus = req.flash('alertStatus');
     const alert = { message: alertMessage, status: alertStatus};

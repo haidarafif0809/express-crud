@@ -21,6 +21,7 @@
         <th>Name</th>
         <th>Brand</th>
         <th>Codeitem</th>
+        <th>List Supplier</th>
         <th>Action</th>
       </thead>
       <tbody>
@@ -37,6 +38,17 @@
             </td>
             <td>
               <%= items[i].codeitem %>
+            </td>
+            <td>
+            <% if (items[i].Suppliers.length) { %>
+              <ul>
+              <% items[i].Suppliers.forEach((supplier) => { %>
+                <li><%= supplier.name %> @ <%= supplier.SupplierItem.formatUang() %></li>
+              <% }) %>
+              </ul>
+            <% }  else { %>
+              No Supplier Yet
+            <% }%>
             </td>
             <td>
               <a href="/items/<%= items[i].id %>/edit" class="btn btn-primary">Edit</a>
