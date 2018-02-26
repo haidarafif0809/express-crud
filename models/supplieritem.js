@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
   });
   SupplierItem.associate = function(models) {
     // associations can be defined here
+    SupplierItem.belongsTo(models.Item);
+    SupplierItem.belongsTo(models.Supplier);
+
   };
   SupplierItem.prototype.formatUang = function () {
     let reverse = this.price.toString().split('').reverse();
