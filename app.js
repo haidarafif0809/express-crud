@@ -6,6 +6,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
 const items = require('./routes/items');
+const suppliers = require('./routes/suppliers');
 
 app.use(cookieParser('keyboard cat'));
 app.use(session({ cookie: { maxAge: 60000 }}));
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({
 //routes
 app.use('/', router);
 app.use('/items', items);
+app.use('/suppliers', suppliers);
 
 const port = 4000;
 
