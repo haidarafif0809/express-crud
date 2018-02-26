@@ -18,8 +18,10 @@
     <table class="table">
       <thead>
         <th>Id</th>
-        <th>Supplier Name</th>
+        <th>Name</th>
         <th>City</th>
+        <th>List Item</th>
+        <th>Add Item</th>
         <th>Action</th>
       </thead>
       <tbody>
@@ -33,6 +35,20 @@
             </td>
             <td>
               <%= suppliers[i].kota %>
+            </td>
+            <td>
+            <% if (suppliers[i].Items.length) { %>
+              <ul>
+              <% suppliers[i].Items.forEach((item) => { %>
+                <li><%= item.name %></li>
+              <% }) %>
+              </ul>
+            <% }  else { %>
+              No Item Yet
+            <% }%>
+            </td>
+            <td>
+              <a href="/suppliers/<%= suppliers[i].id %>/additem" class="btn btn-warning">Assign Item</a>
             </td>
             <td>
               <a href="/suppliers/<%= suppliers[i].id %>/edit" class="btn btn-primary">Edit</a>

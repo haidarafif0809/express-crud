@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
     limit : 10,
     offset: offset,
     order : [['id','DESC']],
+    include: [{model: models.Item}]
   }).then((suppliers) => {
     const alertMessage = req.flash('alertMessage');
     const alertStatus = req.flash('alertStatus');
@@ -98,5 +99,40 @@ router.get('/delete/:id', (req, res) => {
 
   })
 
+});
+router.get('/:id/additem', (req, res) => {
+  const alertMessage = req.flash('alertMessage');
+  const alertStatus = req.flash('alertStatus');
+  const alert = { message: alertMessage, status: alertStatus};
+
+  const id = req.params.id;
+  models.Supplier.findOne({
+    where: {
+      id: id
+    },
+    include: [{ model: models.Item}]
+  }).then((supplier) => {
+    // res.send(supplier);
+    models.Item.all().then((items) => {
+      res.render('suppliers/additem',{
+        alert: alert,
+        supplier: supplier,
+        items: items,
+      });
+    });
+  });
+});
+
+router.post('/:id/additem', (req, res) => {
+  const id = req.params.id;
+  models.SupplierItem.build(req.body).save().then(() => {
+    req.flash('alertMessage', `Success Add Item For Supplier With Id : ${id}`);
+    req.flash('alertStatus', 'success');
+    res.redirect(`/suppliers/${id}/additem`);
+  }).catch((err) => {
+    req.flash('alertMessage', err.message);
+    req.flash('alertStatus', 'danger');
+    res.redirect(`/suppliers/${id}/additem`);
+  })
 });
 module.exports = router;
