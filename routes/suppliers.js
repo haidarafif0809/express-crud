@@ -53,4 +53,50 @@ router.post('/create', (req, res) => {
   });
 
 });
+router.get('/:id/edit', (req, res) => {
+  const alertMessage = req.flash('alertMessage');
+  const alertStatus = req.flash('alertStatus');
+  const alert = { message: alertMessage, status: alertStatus};
+
+  const id = req.params.id;
+  models.Supplier.findById(id).then((supplier) => {
+    res.render('suppliers/edit',{
+      alert: alert,
+      supplier: supplier
+    });
+  });
+});
+
+router.post('/:id/edit', (req, res) => {
+
+  const id = req.params.id;
+  models.Supplier.findById(id).then((supplier) => {
+    return supplier.update(req.body);
+  }).then(() => {
+    req.flash('alertMessage', `Success Update Supplier With Id : ${id}`);
+    req.flash('alertStatus', 'success');
+    res.redirect('/suppliers');
+  }).catch((err) => {
+    req.flash('alertMessage', err.message);
+    req.flash('alertStatus', 'danger');
+    res.redirect('/suppliers');
+  })
+});
+router.get('/delete/:id', (req, res) => {
+  let id = req.params.id;
+  models.Supplier.findById(id).then((supplier) => {
+    return supplier.destroy();
+  }).then(() => {
+    req.flash('alertMessage', `Success Delete Supplier With Id : ${id}`);
+    req.flash('alertStatus', 'success');
+    res.redirect('/suppliers');
+
+  }).catch((err) => {
+    req.flash('alertMessage', err.message);
+    req.flash('alertStatus', 'danger');
+    res.redirect('/suppliers');
+
+  })
+
+});
 module.exports = router;
