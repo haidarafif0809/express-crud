@@ -1,0 +1,32 @@
+<%- include ../templates/header.ejs %>
+  <div class="container">
+    <br>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/items">Items Data</a></li>
+      <li class="breadcrumb-item active">Create New</li>
+    </ol>
+    <h3>Add Item Data</h3>
+    <% if(alert.message != '') { %>
+    <div class="alert alert-<%= alert.status %>">
+      <%= alert.message %>
+    </div>
+    <% } %>
+    <form action="/items/create" method="post">
+      <div class="form-group">
+        <label for="name"> Name:</label>
+        <input type="text" value="<%= data.name %>" class="form-control" name="name" id="name" >
+      </div>
+      <div class="form-group">
+        <label for="brand">Brand:</label>
+        <input type="text" value="<%= data.brand %>" class="form-control" name="brand" id="kota">
+      </div>
+      <div class="form-group">
+        <label for="codeitem">Codeitem:</label>
+        <input type="text" value="<%= data.codeitem %>" class="form-control" name="codeitem" id="kota">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <%- include ../templates/footer.ejs %>
