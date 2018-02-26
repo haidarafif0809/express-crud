@@ -40,7 +40,7 @@
             <% if (suppliers[i].Items.length) { %>
               <ul>
               <% suppliers[i].Items.forEach((item) => { %>
-                <li><%= item.name %></li>
+                <li><%= item.name %> @ <%= item.SupplierItem.formatUang() %></li>
               <% }) %>
               </ul>
             <% }  else { %>
