@@ -79,7 +79,7 @@ router.post('/:id/edit', (req, res) => {
   }).catch((err) => {
     req.flash('alertMessage', err.message);
     req.flash('alertStatus', 'danger');
-    res.redirect('/items');
+    res.redirect(`/items/${id}/edit`);
   })
 });
 router.get('/delete/:id', (req, res) => {
