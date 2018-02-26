@@ -15,7 +15,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       codeitem: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

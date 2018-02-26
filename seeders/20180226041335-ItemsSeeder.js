@@ -9,6 +9,8 @@ module.exports = {
       let name = faker.commerce.productName();
       let brand = faker.company.companyName();
       let codeitem = faker.random.number();
+      codeitem = String(codeitem).substr(0,3);
+      codeitem = `HP${codeitem}`;
       items.push({
         name: name,
         brand: brand,
