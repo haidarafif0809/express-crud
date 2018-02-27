@@ -1,5 +1,4 @@
 'use strict';
-const model = require('./index');
 module.exports = (sequelize, DataTypes) => {
   var Item = sequelize.define('Item', {
     name: DataTypes.STRING,
@@ -24,13 +23,16 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Item.afterDestroy((item) => {
-    console.log(model,'================');
-    model.SupplierItem.all().then((supplierItems) => {
-      // return supplierItems.destroy();
-      console.log(supplierItems);
+    sequelize.models.SupplierItem.all({
+      where: {
+        ItemId: item.id
+      }
+    }).then((supplierItems) => {
+      supplierItems.forEach((item) => {
+        item.destroy();
+      })
     }).catch((err) => {
       console.log(err);
-
     })
   });
   return Item;
