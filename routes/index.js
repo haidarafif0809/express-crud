@@ -8,10 +8,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/search', (req, res) => {
-  let name = req.query.name;
-  console.log(name);
-  let maxPrice = req.query.maxPrice;
-  let minPrice = req.query.minPrice;
+  let name = req.query.name || '';
+  let maxPrice = req.query.maxPrice || 0;
+  let minPrice = req.query.minPrice || 0;
   models.SupplierItem.all({
     where: {
       price: {
