@@ -1,0 +1,81 @@
+<%- include ../templates/header.ejs %>
+  <div class="container">
+    <br>
+    <% if(alert.message != '') { %>
+    <div class="alert alert-<%= alert.status %>">
+      <%= alert.message %>
+    </div>
+    <% } %>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item">Suppliers Data</li>
+    </ol>
+    <h3>Suppliers Data</h3>
+    <br>
+    <a href="/suppliers/create" class="btn btn-primary">Add New Supplier</a>
+    <br>
+    <br>
+    <table class="table">
+      <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>City</th>
+        <th>List Item</th>
+        <th>Add Item</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <% for (var i = 0; i < suppliers.length; i++) { %>
+          <tr>
+            <td>
+              <%= suppliers[i].id %>
+            </td>
+            <td>
+              <%= suppliers[i].name %>
+            </td>
+            <td>
+              <%= suppliers[i].kota %>
+            </td>
+            <td>
+            <% if (suppliers[i].Items.length) { %>
+              <ul>
+              <% suppliers[i].Items.forEach((item) => { %>
+                <li><%= item.name %> @ <%= item.SupplierItem.formatUang() %></li>
+              <% }) %>
+              </ul>
+            <% }  else { %>
+              No Item Yet
+            <% }%>
+            </td>
+            <td>
+              <a href="/suppliers/<%= suppliers[i].id %>/additem" class="btn btn-warning">Assign Item</a>
+            </td>
+            <td>
+              <a href="/suppliers/<%= suppliers[i].id %>/edit" class="btn btn-primary">Edit</a>
+              <button class="btn btn-sm btn-danger btn-delete" data-id="<%= suppliers[i].id %>"> Delete </button>
+            </td>
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+    <% var paginationFor = "suppliers" %>
+    <%- include ../templates/pagination.ejs %>
+  </div>
+  <script type="text/javascript">
+  $('.btn-delete').click(function(){
+    let id = $(this).attr('data-id');
+    swal({
+      title: "Yakin Ingin Menghapus Supplier?",
+      text: "Data yang dihapus, tidak bisa kembali lagi.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        window.location.assign(`/suppliers/delete/${id}`);
+      }
+    });
+  });
+  </script>
+  <%- include ../templates/footer.ejs %>

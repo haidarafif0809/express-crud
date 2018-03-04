@@ -1,0 +1,81 @@
+<%- include ../templates/header.ejs %>
+  <div class="container">
+    <br>
+    <% if(alert.message != '') { %>
+    <div class="alert alert-<%= alert.status %>">
+      <%= alert.message %>
+    </div>
+    <% } %>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item">Items Data</li>
+    </ol>
+    <h3>Items Data</h3>
+    <br>
+    <a href="/items/create" class="btn btn-primary">Add New Item</a>
+    <br>
+    <br>
+    <table class="table">
+      <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Codeitem</th>
+        <th>List Supplier</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <% for (var i = 0; i < items.length; i++) { %>
+          <tr>
+            <td>
+              <%= items[i].id %>
+            </td>
+            <td>
+              <%= items[i].name %>
+            </td>
+            <td>
+              <%= items[i].brand %>
+            </td>
+            <td>
+              <%= items[i].codeitem %>
+            </td>
+            <td>
+            <% if (items[i].Suppliers.length) { %>
+              <ul>
+              <% items[i].Suppliers.forEach((supplier) => { %>
+                <li><%= supplier.name %> @ <%= supplier.SupplierItem.formatUang() %></li>
+              <% }) %>
+              </ul>
+            <% }  else { %>
+              No Supplier Yet
+            <% }%>
+            </td>
+            <td>
+              <a href="/items/<%= items[i].id %>/edit" class="btn btn-primary">Edit</a>
+              <button class="btn btn-sm btn-danger btn-delete" data-id="<%= items[i].id %>"> Delete </button>
+            </td>
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+    <% var paginationFor = "items" %>
+    <%- include ../templates/pagination.ejs %>
+  </div>
+  <script type="text/javascript">
+  $('.btn-delete').click(function(){
+    let id = $(this).attr('data-id');
+    swal({
+      title: "Yakin Ingin Menghapus Item?",
+      text: "Data yang dihapus, tidak bisa kembali lagi.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        window.location.assign(`/items/delete/${id}`);
+      }
+    });
+  });
+  </script>
+  <%- include ../templates/footer.ejs %>

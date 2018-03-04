@@ -1,0 +1,62 @@
+<%- include ../templates/header.ejs %>
+  <div class="container">
+    <br>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/suppliers">Suppliers Data</a></li>
+      <li class="breadcrumb-item active">Assign Item</li>
+    </ol>
+    <h3>Add Item For Supplier</h3>
+    <% if(alert.message != '') { %>
+    <div class="alert alert-<%= alert.status %>">
+      <%= alert.message %>
+    </div>
+    <% } %>
+    <div class="jumbotron">
+      <table>
+        <tbody>
+          <tr>
+            <td>Name : </td>
+            <td><%= supplier.name %></td>
+          </tr>
+          <tr>
+            <td>City : </td>
+            <td><%= supplier.kota %></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <h3>List Item</h3>
+      <table>
+        <tbody>
+          <% supplier.Items.forEach((item) => { %>
+            <tr>
+              <td><%= item.brand %> | </td>
+              <td><%= item.name %></td>
+              <td> @<%= item.SupplierItem.formatUang() %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+<form  action="/suppliers/<%= supplier.id %>/additem" method="post">
+  <div class="row">
+    <input type="hidden" name="SupplierId" value="<%= supplier.id %>">
+    <div class="form-group col-xs-4 col-md-4">
+        <label for="ItemId" class="control-label">List Item</label>
+        <select class="form-control" name="ItemId">
+          <% items.forEach((item) => { %>
+            <option value="<%= item.id %>"><%= item.brand + " " + item.name %></option>
+          <% }) %>
+        </select>
+    </div>
+    <div class="form-group col-xs-4 col-md-4">
+        <label for="price" class="control-label">Price</label>
+        <input type="text"  class="form-control" id="price" name="price"/>
+    </div>
+  </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+  </div>
+
+  <%- include ../templates/footer.ejs %>
