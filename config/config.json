@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "mac",
-    "password": null,
-    "database": "mini_pos",
-    "host": "127.0.0.1",
+    "password": "",
+    "database": "minipos",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
